@@ -1,6 +1,7 @@
 import streamlit as st
 from tokenization import sentenceTokenization, wordTokenization
-from stemming import porterStemming
+from stemming import porterStemming, regexpStemmer, snowballStemmer
+from lemmatization import wordnetLemmatizer
 
 st.title("visual-NLP 👨🏻‍💻")
 st.write("See various NLP preprocessing Tasks visually!")
@@ -26,6 +27,10 @@ def addSubTechniques(techniques) -> None:
     elif techniques == "Stemming":
         subTechniques = st.sidebar.selectbox("Select a Sub-Technique",("Porter Stemmer","Regexp Stemmer", "Snowball Stemmer"))
 
+    elif techniques == "Lemmatization":
+        subTechniques = st.sidebar.selectbox("Select a Sub-Technique",("Wordnet Lemmatizer",))
+
+
 def explanation(subTechniques) -> str:
     if subTechniques == "Sentence Tokenization":
         return "Sentence tokenization in NLP is the process of breaking down a large piece of text into individual sentences. It's like cutting a long rope into smaller strings. It helps NLP models identify sentences, improve accuracy, and streamline processing. It's done by splitting on punctuation, using whitespace, and regular expressions to separate sentences."
@@ -41,6 +46,9 @@ def explanation(subTechniques) -> str:
 
     elif subTechniques == "Snowball Stemmer":
         return "Snowball Stemming is a stemming algorithm used in NLP to reduce words to their base or root form. It's a more advanced algorithm than Porter Stemming, with better accuracy and handling of irregularities. Snowball Stemming is used in many NLP applications, including text processing, information retrieval, and text classification."
+
+    elif subTechniques == "Wordnet Lemmatizer":
+        return "WordNet Lemmatization is a process in NLP that uses a lexical database called WordNet to map words to their base or dictionary form, called the lemma. It's a more accurate and precise method than stemming, as it takes into account the word's part of speech and context. WordNet Lemmatization is used in many NLP applications, including text processing, information retrieval, and text classification."
 
 
 addTechniques()
@@ -69,13 +77,20 @@ if st.button("start", type="primary"):
     elif techniques == "Stemming" and subTechniques == "Regexp Stemmer":
         st.write(explanation(subTechniques))
         st.success("Result:")
-        processed_text = porterStemming(corpus)
+        processed_text = regexpStemmer(corpus)
         st.write(processed_text)
 
     elif techniques == "Stemming" and subTechniques == "Snowball Stemmer":
         st.write(explanation(subTechniques))
         st.success("Result:")
-        processed_text = porterStemming(corpus)
+        processed_text = snowballStemmer(corpus)
         st.write(processed_text)
+
+    elif techniques == "Lemmatization" and subTechniques == "Wordnet Lemmatizer":
+        st.write(explanation(subTechniques))
+        st.success("Result:")
+        processed_text = wordnetLemmatizer(corpus)
+        st.write(processed_text)
+        
 
     
