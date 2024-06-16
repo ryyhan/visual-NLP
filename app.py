@@ -1,7 +1,10 @@
 import streamlit as st
 from tokenization import sentenceTokenization, wordTokenization
 from stemming import porterStemming, regexpStemmer, snowballStemmer
+from stopwordsremoval import stopWordsRemoval
 from lemmatization import wordnetLemmatizer
+from ner import namedEntityRecognition
+from pos import posTagging
 
 st.title("visual-NLP 👨🏻‍💻")
 st.write("See various NLP preprocessing Tasks visually!")
@@ -17,7 +20,7 @@ subTechniques = "NA"
 
 def addTechniques() -> None:
     global techniques
-    techniques = st.sidebar.selectbox("Select a Technique", ("Tokenization", "Stemming", "Lemmatization","Stop words removal", "Parts of Speech (POS) Tagging", "Named Entity Recognition"))
+    techniques = st.sidebar.selectbox("Select a Technique", ("Tokenization", "Stemming", "Lemmatization","Stop words removal", "Parts of Speech (POS) Tagging", "Named Entity Recognition (NER)"))
 
 def addSubTechniques(techniques) -> None:
     global subTechniques
@@ -30,6 +33,14 @@ def addSubTechniques(techniques) -> None:
     elif techniques == "Lemmatization":
         subTechniques = st.sidebar.selectbox("Select a Sub-Technique",("Wordnet Lemmatizer",))
 
+    elif techniques == "Stop words removal":
+        subTechniques = st.sidebar.selectbox("Select a Sub-Technique",("English",))
+
+    elif techniques == "Parts of Speech (POS) Tagging":
+        subTechniques = st.sidebar.selectbox("Select a Sub-Technique",("using NLTK",))
+
+    elif techniques == "Named Entity Recognition (NER)":
+        subTechniques = st.sidebar.selectbox("Select a Sub-Technique",("MaxEnt NE Chunker",))
 
 def explanation(subTechniques) -> str:
     if subTechniques == "Sentence Tokenization":
@@ -49,6 +60,15 @@ def explanation(subTechniques) -> str:
 
     elif subTechniques == "Wordnet Lemmatizer":
         return "WordNet Lemmatization is a process in NLP that uses a lexical database called WordNet to map words to their base or dictionary form, called the lemma. It's a more accurate and precise method than stemming, as it takes into account the word's part of speech and context. WordNet Lemmatization is used in many NLP applications, including text processing, information retrieval, and text classification."
+
+    elif subTechniques == "English":
+        return "Stop words removal is a process in NLP that involves removing common words like 'the', 'and', 'a', etc. from a text dataset. These words are called stop words because they don't carry much meaning in the context of the text. Removing stop words helps to reduce noise, improve search results, and enhance text analysis."
+
+    elif subTechniques == "using NLTK":
+        return "Parts of Speech (POS) tagging is a process in NLP that identifies the grammatical category of each word in a sentence, such as noun, verb, adjective, adverb, etc. POS tagging helps computers understand the meaning and context of text by identifying the part of speech of each word."
+
+    elif subTechniques == "MaxEnt NE Chunker":
+        return "Named Entity Recognition (NER) is a process in NLP that identifies and categorizes named entities in unstructured text into predefined categories such as person, organization, location, date, time, etc. NER helps computers understand the meaning and context of text by identifying specific entities and their types."
 
 
 addTechniques()
@@ -91,6 +111,21 @@ if st.button("start", type="primary"):
         st.success("Result:")
         processed_text = wordnetLemmatizer(corpus)
         st.write(processed_text)
-        
 
-    
+    elif techniques == "Stop words removal" and subTechniques == "English":
+        st.write(explanation(subTechniques))
+        st.success("Result:")
+        processed_text = stopWordsRemoval(corpus)
+        st.write(processed_text)
+
+    elif techniques == "Parts of Speech (POS) Tagging" and subTechniques == "using NLTK":
+        st.write(explanation(subTechniques))
+        st.success("Result:")
+        processed_text = posTagging(corpus)
+        st.write(processed_text)
+
+    elif techniques == "Named Entity Recognition (NER)" and subTechniques == "MaxEnt NE Chunker":
+        st.write(explanation(subTechniques))
+        st.success("Result:")
+        processed_text = namedEntityRecognition(corpus)
+        st.write(processed_text)
