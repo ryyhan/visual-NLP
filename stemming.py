@@ -1,4 +1,4 @@
-from nltk.stem import PorterStemmer
+from nltk.stem import PorterStemmer,  RegexpStemmer, SnowballStemmer
 from nltk.tokenize import word_tokenize
 
 def porterStemming(corpus):
