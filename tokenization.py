@@ -3,10 +3,10 @@ nltk.download('punkt')
 
 from nltk.tokenize import sent_tokenize, word_tokenize
 
-def sentenceTokenization(corpus):
+def sentenceTokenization(corpus) -> str:
     processed_text = sent_tokenize(corpus)
     return processed_text
 
-def wordTokenization(corpus):
+def wordTokenization(corpus) -> str:
     processed_text = word_tokenize(corpus)
     return processed_text
