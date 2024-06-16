@@ -1,7 +1,7 @@
 from nltk.stem import PorterStemmer,  RegexpStemmer, SnowballStemmer
 from nltk.tokenize import word_tokenize
 
-def porterStemming(corpus):
+def porterStemming(corpus) -> str:
     processed_text=""
     words = word_tokenize(corpus)
     ps = PorterStemmer()
@@ -10,7 +10,7 @@ def porterStemming(corpus):
     return processed_text
 
 
-def regexpStemmer(corpus):
+def regexpStemmer(corpus) -> str:
     processed_text=""
     words = word_tokenize(corpus)
     rs = RegexpStemmer('ing$|able$|s$')
@@ -19,7 +19,7 @@ def regexpStemmer(corpus):
     return processed_text
 
 
-def snowballStemmer(corpus):
+def snowballStemmer(corpus) -> str:
     processed_text=""
     words = word_tokenize(corpus)
     ss = SnowballStemmer("english")
